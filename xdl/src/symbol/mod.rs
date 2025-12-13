@@ -1,11 +1,10 @@
 mod library;
 pub use library::*;
 
-use crate::ptr::RowPtr;
 use std::marker::PhantomData;
-use std::mem::{transmute, transmute_copy};
+use std::mem::transmute_copy;
 use std::ops::{Deref, DerefMut};
-use std::os::raw::*;
+use std::os::raw::c_void;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Symbol<'lib, T: 'lib> {

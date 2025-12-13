@@ -1,5 +1,5 @@
 use crate::Error;
-use crate::raw::{Handle, Library as RowLibrary};
+use crate::raw::Library as RowLibrary;
 use crate::symbol::Symbol;
 use std::ffi::CStr;
 use std::ops::Deref;

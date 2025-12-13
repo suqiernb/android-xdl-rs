@@ -1,4 +1,4 @@
-use super::dl_phdr_info;
+pub use libc::dl_phdr_info;
 use libc::{Elf32_Phdr, Elf64_Phdr};
 use std::os::raw::*;
 
