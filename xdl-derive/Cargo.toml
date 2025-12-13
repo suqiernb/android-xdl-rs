@@ -7,6 +7,7 @@ description = "Derive macros for the android_xdl crate."
 license = "MIT"
 repository = "https://github.com/suqiernb/android-xdl-rs"
 readme = "../README.md"
+keywords = ["android", "dlopen", "xdl"]
 
 [lib]
 proc-macro = true
