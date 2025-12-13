@@ -8,6 +8,8 @@ pub mod raw;
 mod symbol;
 #[cfg(feature = "wrapper")]
 pub mod wrapper;
+#[cfg(feature = "derive")]
+pub use android_xdl_derive as derive;
 
 pub use error::Error;
 pub use mut_ptr::RowPtrMut;

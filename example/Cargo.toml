@@ -12,4 +12,3 @@ log = "0.4"
 env_logger = "0.11"
 chrono = "0.4"
 android_xdl = { workspace = true, features = ["derive"] }
-android_xdl_derive = { workspace = true }

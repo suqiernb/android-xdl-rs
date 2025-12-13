@@ -45,7 +45,7 @@ fn main() -> Result<(), Error> {
 use std::os::raw::*;
 use android_xdl::wrapper::Container;
 use android_xdl::{Error, Library};
-use android_xdl_derive::NativeBridge;
+use android_xdl::derive::NativeBridge;
 
 #[derive(NativeBridge)]
 struct LibcApi {
