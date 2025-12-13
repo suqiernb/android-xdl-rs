@@ -1,0 +1,17 @@
+[package]
+name = "android_xdl_derive"
+edition = "2024"
+version = "0.0.1"
+authors = ["github@suqiernb <suqiernb@qq.com>"]
+description = "Derive macros for the android_xdl crate."
+license = "MIT"
+repository = "https://github.com/suqiernb/android-xdl-rs"
+readme = "../README.md"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0", features = ["derive", "extra-traits", "proc-macro", "full"] }
+quote = { version = "1.0", features = ["proc-macro"] }
+proc-macro2 = { version = "1.0", features = ["proc-macro"] }

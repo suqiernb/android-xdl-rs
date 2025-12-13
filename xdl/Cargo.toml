@@ -1,0 +1,21 @@
+[package]
+name = "android_xdl"
+edition = "2024"
+version = "0.0.1"
+authors = ["github@suqiernb <suqiernb@qq.com>"]
+description = "xDL is an enhanced implementation of the Android DL series functions."
+license = "MIT"
+repository = "https://github.com/suqiernb/android-xdl-rs"
+readme = "../README.md"
+
+[dependencies]
+libc = { workspace = true }
+android_xdl_derive = { workspace = true, optional = true }
+
+[build-dependencies]
+cc = { version = "1.2", features = ["parallel"] }
+
+[features]
+default = []
+wrapper = []
+derive = ["wrapper", "dep:android_xdl_derive"]

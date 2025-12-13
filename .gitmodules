@@ -1,0 +1,3 @@
+[submodule "xdl/c"]
+	path = xdl/c
+	url = https://github.com/hexhacking/xDL.git

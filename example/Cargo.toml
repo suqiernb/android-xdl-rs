@@ -1,0 +1,15 @@
+[package]
+name = "libc_example"
+edition = "2024"
+version = "0.0.1"
+
+[[example]]
+path = "examples/libc_puts.rs"
+name = "test_puts"
+
+[dependencies]
+log = "0.4"
+env_logger = "0.11"
+chrono = "0.4"
+android_xdl = { workspace = true, features = ["derive"] }
+android_xdl_derive = { workspace = true }
