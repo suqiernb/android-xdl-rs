@@ -3,7 +3,6 @@ resolver = "3"
 members = ["xdl", "xdl-derive", "example"]
 
 [workspace.dependencies]
-libc = "0.2"
 android_xdl = { path = "xdl" }
 android_xdl_derive = { path = "xdl-derive" }
 
