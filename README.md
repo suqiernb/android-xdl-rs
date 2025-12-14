@@ -7,7 +7,7 @@
 
 xDL is an enhanced implementation of the Android DL series functions.
 
-[**简体中文**](README.zh-CN.md)
+[**简体中文**](https://github.com/suqiernb/android-xdl-rs/blob/master/README.zh-CN.md)
 
 ## Credits
 
@@ -15,4 +15,4 @@ xDL is an enhanced implementation of the Android DL series functions.
 
 ## License
 
-xDL is MIT licensed, as found in the [LICENSE](LICENSE) file.
+MIT licensed, as found in the [LICENSE](LICENSE) file.

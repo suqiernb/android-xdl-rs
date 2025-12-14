@@ -7,7 +7,25 @@
 
 xDL 是 Android DL 系列函数的增强实现。
 
-[**English**](README.md)
+[**English**](https://github.com/suqiernb/android-xdl-rs/blob/master/README.md)
+
+> [!WARNING]
+> 目前处于初步可用状态, api 可能不稳定.
+
+## 特性
+
+* 增强的 `dlopen()` + `dlsym()` + `dladdr()`。
+    * 绕过 Android 7.0+ linker namespace 的限制。
+    * 查询 `.dynsym` 中的动态链接符号。
+    * 查询 `.symtab` 和 “`.gnu_debugdata` 里的 `.symtab`” 中的调试符号。
+* 增强的 `dl_iterate_phdr()`。
+    * 兼容 ARM32 平台的 Android 4.x。
+    * 在 Android <= 8.x 时，包含 linker / linker64。
+    * 在 Android 5.x 中，返回完整的路径名（full pathname），而不是文件名（basename）。
+    * 返回 app\_process32 / app\_process64，而不是包名。
+* 支持 Android 4.1 - 16 (API level 16 - 36)。
+* 支持 armeabi-v7a, arm64-v8a, x86 和 x86_64。
+
 
 ## 快速指南
 > 这个库是 [xDL](https://github.com/hexhacking/xDL) 的 rust 绑定, 提供了一套安全且易用的 API，用于在 Android 平台上进行动态链接库的加载和符号查找。
@@ -15,7 +33,7 @@ xDL 是 Android DL 系列函数的增强实现。
 ### 添加依赖
 ```toml
 [dependencies]
-android_xdl = { version = "0.0.1", features = ["derive"] }
+android_xdl = { version = "0.0.2", features = ["derive"] }
 ```
 
 ### 手动加载
@@ -72,8 +90,8 @@ fn main() -> Result<(), Error> {
 
 ## 致谢
 
-* [xDL](https://github.com/hexhacking/xDL): fork source
+* [xDL](https://github.com/hexhacking/xDL): 这一切的源头
 
 ## 许可证
 
-xDL 使用 [MIT 许可证](LICENSE)。
+使用 [MIT 许可证](LICENSE)
