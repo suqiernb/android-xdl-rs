@@ -37,7 +37,7 @@ fn example() -> Result<()> {
         log::trace!("strlen: {}", str1_len);
         let mut buff: Vec<c_char> = Vec::with_capacity(128);
         api.strncpy(buff.as_mut_ptr(), str1.as_ptr(), str1_len);
-        buff[str1_len] = b'\0';
+        buff[str1_len] = 0;
         api.puts(buff.as_ptr());
     }
 
