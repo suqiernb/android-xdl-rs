@@ -5,7 +5,8 @@ const SOURCE_PATH: &str = "c/xdl/src/main/cpp";
 fn main() {
     let target = std::env::var("TARGET").unwrap();
     if !target.contains("android") {
-        panic!("Only 'android' target is supported, found: {}", target);
+        println!("cargo:warning=Only 'android' target is supported, found: {}", target);
+        return;
     }
 
     cc::Build::new()
