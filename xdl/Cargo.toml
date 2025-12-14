@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/suqiernb/android-xdl-rs"
 readme = "../README.md"
 keywords = ["android", "bindings", "dlopen", "xdl"]
-categories = ["api-bindings", "os::android-apis"]
+categories = ["api-bindings"]
 
 [package.metadata.docs.rs]
 targets = [
