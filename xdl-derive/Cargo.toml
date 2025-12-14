@@ -7,7 +7,18 @@ description = "Derive macros for the android_xdl crate."
 license = "MIT"
 repository = "https://github.com/suqiernb/android-xdl-rs"
 readme = "../README.md"
-keywords = ["android", "dlopen", "xdl"]
+keywords = ["android", "bindings", "dlopen", "xdl"]
+categories = ["api-bindings"]
+
+[package.metadata.docs.rs]
+targets = [
+    "thumbv7neon-linux-androideabi",
+    "arm-linux-androideabi",
+    "armv7-linux-androideabi",
+    "aarch64-linux-android",
+    "i686-linux-android",
+    "x86_64-linux-android",
+]
 
 [lib]
 proc-macro = true
