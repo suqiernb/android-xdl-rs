@@ -82,7 +82,12 @@ impl Library {
 
 impl Drop for Library {
     fn drop(&mut self) {
-        unsafe { self.handle = xdl_close(self.handle) };
+        unsafe {
+            let handle = xdl_close(self.handle);
+            if !handle.is_null() {
+                libc::dlclose(handle);
+            }
+        }
     }
 }
 
