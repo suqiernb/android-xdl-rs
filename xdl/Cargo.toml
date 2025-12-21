@@ -1,7 +1,7 @@
 [package]
 name = "android_xdl"
 edition = "2024"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["github@suqiernb <suqiernb@qq.com>"]
 description = "xDL is an enhanced implementation of the Android DL series functions."
 license = "MIT"
