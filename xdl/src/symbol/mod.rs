@@ -6,6 +6,11 @@ use std::mem::transmute_copy;
 use std::ops::{Deref, DerefMut};
 use std::os::raw::c_void;
 
+/// Safe wrapper around a symbol obtained from [`Library`].
+///
+/// This is the most generic type, valid for obtaining functions, references and pointers.
+/// It does not accept null value of the library symbol. Other types may provide
+/// more specialized functionality better for some use cases.
 #[derive(Debug, Clone, Copy)]
 pub struct Symbol<'lib, T: 'lib> {
     symbol: T,

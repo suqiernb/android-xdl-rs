@@ -4,16 +4,23 @@ use std::ffi::CStr;
 use std::mem::{size_of, transmute_copy};
 use std::os::raw::c_void;
 
-pub type Handle = *mut c_void;
-
 type Result<T> = std::result::Result<T, Error>;
 
+
+/**
+Main interface for opening and working with a dynamic link library.
+
+**Note:** The handle to the library gets released when the library object gets dropped.
+Unless your application opened the library multiple times, this is the moment when symbols
+obtained from the library become dangling symbols.
+*/
 #[derive(Debug)]
 pub struct Library {
     handle: Handle,
 }
 
 impl Library {
+    /// Create Library from Library handle.
     pub unsafe fn new(handle: Handle) -> Result<Self> {
         let handle: Option<_> = handle.into();
         handle.map(|handle| Self { handle }).ok_or_else(|| {
@@ -21,10 +28,12 @@ impl Library {
         })
     }
 
+    /// Open dynamic library using provided file name or path.
     pub unsafe fn open(name: &CStr) -> Result<Self> {
         unsafe { Self::open_with_flags(name, XDL_DEFAULT) }
     }
 
+    /// Open a dynamic library with flags.
     pub unsafe fn open_with_flags(name: &CStr, flags: i32) -> Result<Self> {
         unsafe {
             if !name.is_empty() {
@@ -39,6 +48,7 @@ impl Library {
         }
     }
 
+    /// Obtains a symbol from the opened library.
     pub unsafe fn symbol<T: Sized>(
         &self,
         name: &CStr,
@@ -57,6 +67,7 @@ impl Library {
         }
     }
 
+    /// Obtains a debug symbol from the opened library.
     pub unsafe fn debug_symbol<T: Sized>(
         &self,
         name: &CStr,
@@ -75,6 +86,7 @@ impl Library {
         }
     }
 
+    /// Returns the raw handle for the opened library.
     pub unsafe fn handle(&self) -> Handle {
         self.handle
     }
