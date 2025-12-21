@@ -6,7 +6,7 @@ use std::ops::Deref;
 
 type Result<T> = std::result::Result<T, Error>;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Library {
     lib: RowLibrary,
 }

@@ -8,7 +8,7 @@ pub type Handle = *mut c_void;
 
 type Result<T> = std::result::Result<T, Error>;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Library {
     handle: Handle,
 }
