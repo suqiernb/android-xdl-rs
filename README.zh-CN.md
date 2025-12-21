@@ -94,4 +94,4 @@ fn main() -> Result<(), Error> {
 
 ## 许可证
 
-使用 [MIT 许可证](LICENSE)
+使用 [MIT 许可证](https://github.com/suqiernb/android-xdl-rs/blob/master/LICENSE)
