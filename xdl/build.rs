@@ -1,39 +1,25 @@
-use std::path::PathBuf;
-
-const SOURCE_PATH: &str = "c/xdl/src/main/cpp";
+use std::path::Path;
 
 fn main() {
-    let target = std::env::var("TARGET").unwrap();
-    if !target.contains("android") {
-        println!("cargo:warning=Only 'android' target is supported, found: {}", target);
+    if std::env::var("DOCS_RS").is_ok() {
         return;
     }
 
+    let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap();
+    if target_os != "android" {
+        println!("cargo:warning=`xdl` is designed for Android targets");
+        return;
+    }
+
+    let xdl_source = Path::new("../xdl-clib/xdl/src/main/cpp");
     cc::Build::new()
-        .include(format!("{}/include", SOURCE_PATH))
-        .include(SOURCE_PATH)
-        .files(get_sources())
+        .include(xdl_source.join("include"))
+        .file(xdl_source.join("xdl.c"))
+        .file(xdl_source.join("xdl_iterate.c"))
+        .file(xdl_source.join("xdl_linker.c"))
+        .file(xdl_source.join("xdl_lzma.c"))
+        .file(xdl_source.join("xdl_util.c"))
         .flag("-std=c17")
         .flags(["-Wall", "-Os", "-ffunction-sections", "-fdata-sections"])
         .compile("xdl");
-
-    println!("cargo:rustc-link-arg=-Wl,--exclude-libs,ALL");
-    println!("cargo:rustc-link-arg=-Wl,--gc-sections");
-    if target.contains("aarch64") || target.contains("x86_64") {
-        println!("cargo:rustc-link-arg=-Wl,-z,max-page-size=16384");
-    }
-}
-
-fn get_sources() -> Vec<PathBuf> {
-    let mut sources = Vec::new();
-    if let Ok(entries) = std::fs::read_dir(SOURCE_PATH) {
-        for entry in entries {
-            let entry = entry.unwrap();
-            let path = entry.path();
-            if path.extension().map(|e| e == "c").unwrap_or(false) {
-                sources.push(path);
-            }
-        }
-    }
-    sources
 }
