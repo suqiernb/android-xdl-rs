@@ -3,9 +3,9 @@ use crate::Error;
 use std::ffi::CStr;
 use std::mem::{size_of, transmute_copy};
 use std::os::raw::c_void;
+use std::ptr::NonNull;
 
 type Result<T> = std::result::Result<T, Error>;
-
 
 /**
 Main interface for opening and working with a dynamic link library.
@@ -22,10 +22,14 @@ pub struct Library {
 impl Library {
     /// Create Library from Library handle.
     pub unsafe fn new(handle: Handle) -> Result<Self> {
-        let handle: Option<_> = handle.into();
-        handle.map(|handle| Self { handle }).ok_or_else(|| {
-            Error::OpeningLibraryError("Cannot create `Library` from null pointer.".to_string())
-        })
+        let handle = NonNull::new(handle);
+        handle
+            .map(|handle| Self {
+                handle: handle.as_ptr(),
+            })
+            .ok_or_else(|| {
+                Error::OpeningLibraryError("Cannot create `Library` from null pointer.".to_string())
+            })
     }
 
     /// Open dynamic library using provided file name or path.
@@ -60,9 +64,9 @@ impl Library {
                 Some(size) => size,
                 None => std::ptr::null_mut(),
             };
-            let symbol: Option<_> = xdl_sym(self.handle, name.as_ptr(), size_ptr).into();
+            let symbol = NonNull::new(xdl_sym(self.handle, name.as_ptr(), size_ptr));
             symbol
-                .map(|symbol| transmute_copy(&symbol))
+                .map(|symbol| transmute_copy(&symbol.as_ptr()))
                 .ok_or_else(|| Error::SymbolNotFound(name.to_string_lossy().to_string()))
         }
     }
@@ -79,9 +83,9 @@ impl Library {
                 Some(size) => size,
                 None => std::ptr::null_mut(),
             };
-            let symbol: Option<_> = xdl_dsym(self.handle, name.as_ptr(), size_ptr).into();
+            let symbol = NonNull::new(xdl_dsym(self.handle, name.as_ptr(), size_ptr));
             symbol
-                .map(|symbol| transmute_copy(&symbol))
+                .map(|symbol| transmute_copy(&symbol.as_ptr()))
                 .ok_or_else(|| Error::SymbolNotFound(name.to_string_lossy().to_string()))
         }
     }
@@ -107,11 +111,11 @@ unsafe impl Send for Library {}
 unsafe impl Sync for Library {}
 
 #[inline]
-fn assert_type_size<T>() {
-    if size_of::<T>() != size_of::<*mut ()>() {
-        panic!(
-            "The type passed to xdl::Library::symbol() function has a different size than a \
-                 pointer - cannot transmute"
-        );
-    }
+const fn assert_type_size<T: Sized>() {
+    const {
+        assert!(
+            size_of::<T>() == size_of::<*mut ()>(),
+            "Cannot transmute: type size must match pointer size for safe transmutation."
+        )
+    };
 }
