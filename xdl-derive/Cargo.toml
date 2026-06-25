@@ -12,8 +12,6 @@ categories = ["api-bindings"]
 
 [package.metadata.docs.rs]
 targets = [
-    "thumbv7neon-linux-androideabi",
-    "arm-linux-androideabi",
     "armv7-linux-androideabi",
     "aarch64-linux-android",
     "i686-linux-android",

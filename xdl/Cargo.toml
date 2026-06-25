@@ -12,13 +12,12 @@ categories = ["api-bindings"]
 
 [package.metadata.docs.rs]
 targets = [
-    "thumbv7neon-linux-androideabi",
-    "arm-linux-androideabi",
     "armv7-linux-androideabi",
     "aarch64-linux-android",
     "i686-linux-android",
     "x86_64-linux-android",
 ]
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 libc = "0.2"
