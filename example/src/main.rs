@@ -1,11 +1,10 @@
-use chrono::Local;
-use env_logger::fmt::style::Style;
-use std::ffi::CString;
-use std::io::Write;
-use std::os::raw::*;
+use android_xdl::derive::NativeBridge;
 use android_xdl::wrapper::Container;
 use android_xdl::{Error, Library};
-use android_xdl::derive::NativeBridge;
+use chrono::Local;
+use env_logger::fmt::style::Style;
+use std::io::Write;
+use std::os::raw::*;
 
 type Result<T> = std::result::Result<T, Error>;
 
@@ -15,30 +14,23 @@ struct LibcApi {
     puts: unsafe extern "C" fn(*const c_char) -> c_int,
     getpid: unsafe extern "C" fn() -> c_int,
     getuid: unsafe extern "C" fn() -> c_uint,
-    strlen: unsafe extern "C" fn(*const c_char) -> usize,
-    strncpy: unsafe extern "C" fn(dst: *mut c_char, src: *const c_char, n: usize) -> *mut c_char,
+    #[native(symbol = "this_function_does_not_exist")]
+    non_existent_function: Option<unsafe extern "C" fn() -> c_int>,
 }
 
 fn example() -> Result<()> {
     let api = Container::<LibcApi>::from(Library::open(c"libc.so")?)?;
 
     unsafe {
-        // 测试 PID 和 UID
-        let pid = api.getpid();
-        let uid = api.getuid();
-        log::debug!("PID: {}, UID: {}", pid, uid);
-
-        // 测试 puts
         api.puts(c"puts: \tHello World\n\t中文字符测试\n\t表情符号测试😎".as_ptr());
 
-        // 测试字符串拷贝
-        let str1 = CString::from(c"Hello World\n");
-        let str1_len = api.strlen(str1.as_ptr());
-        log::trace!("strlen: {}", str1_len);
-        let mut buff: Vec<c_char> = Vec::with_capacity(128);
-        api.strncpy(buff.as_mut_ptr(), str1.as_ptr(), str1_len);
-        buff[str1_len] = 0;
-        api.puts(buff.as_ptr());
+        let pid = api.getpid();
+        let uid = api.getuid();
+        log::debug!("PID: {pid}, UID: {uid}");
+
+        if api.has_non_existent_function() {
+            log::error!("`int this_function_does_not_exist()` exists unexpectedly!");
+        }
     }
 
     Ok(())
