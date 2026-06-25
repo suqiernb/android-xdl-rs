@@ -1,5 +1,5 @@
 use super::api::*;
-use crate::{Error, mut_ptr::RowPtrMut, ptr::RowPtr};
+use crate::Error;
 use std::ffi::CStr;
 use std::mem::{size_of, transmute_copy};
 use std::os::raw::c_void;
