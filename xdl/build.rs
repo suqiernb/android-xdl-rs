@@ -11,7 +11,7 @@ fn main() {
         return;
     }
 
-    let xdl_source = Path::new("../xdl-clib/xdl/src/main/cpp");
+    let xdl_source = Path::new("clib/xdl/src/main/cpp");
     cc::Build::new()
         .include(xdl_source.join("include"))
         .file(xdl_source.join("xdl.c"))
