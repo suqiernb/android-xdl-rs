@@ -83,9 +83,11 @@ This code is licensed under the [MIT](https://github.com/suqiernb/android-xdl-rs
   library and its API in one structure - this makes sure that symbols and library are released
   together.
 */
-
-#![cfg(target_os = "android")]
 #![allow(unused_imports, dead_code)]
+
+
+#[cfg(not(target_os = "android"))]
+compile_error!("android_xdl only supports compiling for Android");
 
 mod error;
 pub mod raw;
